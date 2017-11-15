@@ -210,10 +210,12 @@
 
 			this.svg.append("text")
 					.attr("transform", "rotate(-90)")
-					.attr("y", -this.margin.left)
+          .attr("y", this.axisConfig.y.unitPadding ? 
+            this.axisConfig.y.unitPadding  : -this.margin.left)
 					.attr("x", 0 - (this.adjustedHeight / 2))
 					.attr("dy", "1em")
-					.attr("class", "yaxis-label")
+          .attr("class", "yaxis-label")
+          .style("overflow", "clip")
 					.text(this.unit);
     },
     drawBars(data) {
