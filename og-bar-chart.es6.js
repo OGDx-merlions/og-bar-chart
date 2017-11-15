@@ -235,8 +235,11 @@
             if(me.axisConfig.x.selectionColor) {
               d3.select(this).style("fill", me.axisConfig.x.selectionColor);
               if(me._selections[i]) {
-                d3.select(this).style("fill", 
-                  me.axisConfig.x.series[i].color || "steelblue");
+                let color = "steelblue";
+                if(me.axisConfig.x.series && me.axisConfig.x.series.length > i) {
+                  color = me.axisConfig.x.series[i].color || "steelblue";
+                }
+                d3.select(this).style("fill", color);
               }
             }
             if(me._selections[i]) {
