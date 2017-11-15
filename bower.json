@@ -1,0 +1,43 @@
+{
+  "name": "og-bar-chart",
+  "version": "0.0.1",
+  "main": [
+    "og-bar-chart.html"
+  ],
+  "ignore": [
+    ".*",
+    "npm-debug.log",
+    "gulpfile.js",
+    "sass",
+    "test",
+    "OSS_Notice.pdf",
+    "scripts",
+    ".github",
+    "og-bar-chart.png",
+    "LICENSE.md",
+    "CONTRIBUTING.md",
+    "HISTORY.md",
+    "README.md",
+    ".jshintrc",
+    ".editorconfig",
+    "*.enc"
+  ],
+  "dependencies": {
+    "polymer": "^1.9.0",
+    "px-d3-imports": "^2.1.0",
+    "px-dark-theme": "^2.0.20"
+  },
+  "devDependencies": {
+    "px-headings-design": "^1.0.0",
+    "px-layout-design": "^1.0.0",
+    "px-toggle-design": "^2.0.0",
+    "px-box-design": "^1.0.0",
+    "px-code-design": "^2.0.0",
+    "px-starter-kit-design": "^1.0.0",
+    "px-demo": "^2.0.0",
+    "px-theme": "^3.0.0"
+  },
+  "resolutions": {
+    "webcomponentsjs": "^0.7.0"
+  }
+}
