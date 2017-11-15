@@ -81,7 +81,8 @@
 							"gridColor": "steelblue"
 						}
 					};
-				}
+				},
+        observer: "_redraw"
       },
       /**
 			* Margin for the charts
@@ -249,7 +250,6 @@
               me._selections[i] = true;
               me._selections.total++;
             }
-            console.log(me._selections)
             me.fire("bar-clicked", {"point": d, "data": data, 
               "index": i, "selections": me._selections});
           });
