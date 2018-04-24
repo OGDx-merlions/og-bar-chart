@@ -122,7 +122,7 @@
     },
     
     _redraw: function(newData, oldData) {
-			Polymer.dom(this.$.chart).node.innerHTML = "";
+      Px.d3.select(this.$.chart).selectAll("svg").remove();
 			this.draw();
     },
 
@@ -150,15 +150,15 @@
     
     _setDefaultMargin() {
 			this.margin = this.margin || {top: 20, right: 20, bottom: 30, left: 50};
-      this.margin.top = this.margin.top ? this.margin.top : 20;
-      this.margin.right = this.margin.right ? this.margin.right : 20;
-      this.margin.bottom = this.margin.bottom ? this.margin.bottom : 30;
-      this.margin.left = this.margin.left ? this.margin.left : 50;
+      this.margin.top = this.margin.top || 20;
+      this.margin.right = this.margin.right || 20;
+      this.margin.bottom = this.margin.bottom || 30;
+      this.margin.left = this.margin.left || 50;
       
-			this.margin.left =  this.margin.left + 30;
-			this.margin.top =  this.margin.top + 30;
-			this.adjustedWidth = this.width - this.margin.left - this.margin.right,
-			this.adjustedHeight = this.height - this.margin.top - this.margin.bottom;
+      this.adjustedWidth = this.adjustedWidth || 
+        (this.width - this.margin.left - this.margin.right),
+      this.adjustedHeight = this.adjustedHeight || 
+        (this.height - this.margin.top - this.margin.bottom);
     },
     
     _prepareChartingArea() {

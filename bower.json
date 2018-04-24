@@ -38,6 +38,7 @@
     "px-theme": "^3.0.0"
   },
   "resolutions": {
-    "webcomponentsjs": "^0.7.0"
+    "webcomponentsjs": "^0.7.0",
+    "px-overlay": "^1.0.0"
   }
 }
