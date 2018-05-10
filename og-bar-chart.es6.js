@@ -180,7 +180,7 @@
 
 			this.x.domain(data.map(function(d) { return d.x; }));
       this.y.domain([this.axisConfig.y.start || 0, 
-        d3.max(data, function(d) { return d.y; })]);
+        this.axisConfig.y.end ||d3.max(data, function(d) { return d.y; })]);
 		},
 		_drawAxes(data) {
       let x= this.x, y=this.y, me = this, d3 = Px.d3;
