@@ -1,7 +1,7 @@
 (function() {
   Polymer({
 
-    is: 'og-bar-chart', 
+    is: 'og-bar-chart',
 
     properties: {
       /**
@@ -120,7 +120,7 @@
 			this._drawGridLines(data);
       this.fire("chart-drawn", {});
     },
-    
+
     _redraw: function(newData, oldData) {
       Px.d3.select(this.$.chart).selectAll("svg").remove();
 			this.draw();
@@ -136,7 +136,7 @@
     _setDefaults() {
 			// set the dimensions and margins of the graph
 			this._setDefaultMargin();
-			
+
 			this.axisConfig = this.axisConfig || {};
 			this.axisConfig.x = this.axisConfig.x || {};
       this.axisConfig.y = this.axisConfig.y || {};
@@ -147,20 +147,20 @@
 			this.customStyle['--font-size'] = "11px";
 			this.updateStyles();
     },
-    
+
     _setDefaultMargin() {
 			this.margin = this.margin || {top: 20, right: 20, bottom: 30, left: 50};
       this.margin.top = this.margin.top || 20;
       this.margin.right = this.margin.right || 20;
       this.margin.bottom = this.margin.bottom || 30;
       this.margin.left = this.margin.left || 50;
-      
-      this.adjustedWidth = this.adjustedWidth || 
+
+      this.adjustedWidth = this.adjustedWidth ||
         (this.width - this.margin.left - this.margin.right),
-      this.adjustedHeight = this.adjustedHeight || 
+      this.adjustedHeight = this.adjustedHeight ||
         (this.height - this.margin.top - this.margin.bottom);
     },
-    
+
     _prepareChartingArea() {
 			let d3 = Px.d3;
 			this.svg = d3.select(this.$.chart).append("svg")
@@ -179,8 +179,8 @@
 			this.y = d3.scaleLinear().rangeRound([this.adjustedHeight, 0]).clamp(true);
 
 			this.x.domain(data.map(function(d) { return d.x; }));
-      this.y.domain([this.axisConfig.y.start || 0, 
-        this.axisConfig.y.end ||d3.max(data, function(d) { return d.y; })]);
+      this.y.domain([this.axisConfig.y.start || 0,
+        this.axisConfig.y.end||d3.max(data, function(d) { return d.y; })]);
 		},
 		_drawAxes(data) {
       let x= this.x, y=this.y, me = this, d3 = Px.d3;
@@ -210,7 +210,7 @@
 
 			this.svg.append("text")
 					.attr("transform", "rotate(-90)")
-          .attr("y", this.axisConfig.y.unitPadding ? 
+          .attr("y", this.axisConfig.y.unitPadding ?
             this.axisConfig.y.unitPadding  : -this.margin.left)
 					.attr("x", 0 - (this.adjustedHeight / 2))
 					.attr("dy", "1em")
@@ -225,7 +225,7 @@
         .enter().append("rect")
           .attr("class", "bar")
           .attr("x", (d) => { return x(d.x); })
-          .attr("y", (d) => { return y(d.y); })
+          .attr("y", (d) => { return this.adjustedHeight; })
           .style("fill", (d, i) => {
             if(this.axisConfig.x.series && this.axisConfig.x.series.length > i) {
               return this.axisConfig.x.series[i].color || "steelblue";
@@ -233,7 +233,12 @@
             return "steelblue";
           })
           .attr("width", x.bandwidth())
-          .attr("height", (d) => { return this.adjustedHeight - y(d.y); })
+          .transition()
+          .duration(1000)
+          .attr("y", (d) => { return y(d.y); })
+          .attr("height", (d) => { return this.adjustedHeight - y(d.y); });
+
+          this.svg.selectAll(".bar")
           .on('click', function(d, i) {
             if(me.axisConfig.x.selectionColor) {
               d3.select(this).style("fill", me.axisConfig.x.selectionColor);
@@ -252,9 +257,21 @@
               me._selections[i] = true;
               me._selections.total++;
             }
-            me.fire("bar-clicked", {"point": d, "data": data, 
+            me.fire("bar-clicked", {"point": d, "data": data,
               "index": i, "selections": me._selections});
           });
+          let tooltip = this.$.tooltip;
+          tooltip.style.display="none";
+          this.svg.selectAll(".bar")
+          .on("mousemove", function(d){
+            tooltip.style.display="";
+            tooltip.style.left = d3.event.pageX + "px";
+            tooltip.style.top = d3.event.pageY  - 70 + "px";
+            tooltip.innerHTML='<div class="title">'+d.x+'</div>'+
+                              '<div class="value">'+d.y+'</div>';
+          });
+          this.svg.selectAll(".bar")
+          .on("mouseout", function(d){  tooltip.style.display="none";});
     },
 		_drawGridLines(data) {
 			let x= this.x, y=this.y, me = this, d3 = Px.d3;

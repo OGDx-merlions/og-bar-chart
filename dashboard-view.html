@@ -1,0 +1,36 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/px-modal/px-modal.html">
+<link rel="import" href="../../mwo-view/mwo-view.html">
+<link rel="import" href="../../og-spine/og-spine.html">
+
+<link rel="import" href="dashboard-view-styles.html">
+
+<dom-module id="dashboard-view">
+  <template>
+    <style include="dashboard-view-styles"></style>
+    <div class="top-container">
+      <div>
+        <button id="btnMwo" on-tap="_showMwoModel">show</button>
+      </div>
+      <px-modal id="previewMWO" opened>
+        <div slot="header" class="modal modal-header">
+            <div class="flex flex--row flex--justify flex--top">
+                <div>
+                    <span class="main-heading">Multi Well Optimization</span>
+                    <br>
+                    <span class="sub-heading">Bed 3</span>
+                </div>
+                <div>
+                    <px-icon icon="px-nav:close" class="custom-icon" on-tap="_closeMwoModal"></px-icon>
+                </div>
+            </div>
+        </div>
+        <div slot="body" class="modal modal-body">
+            <mwo-view></mwo-view>
+        </div>
+      </px-modal>
+    </div>
+  </template>
+  <script src="dashboard-view.es5.js">
+  </script>
+</dom-module>

@@ -114,6 +114,18 @@ $chart-font-size: var(--font-size, 11px);
   }
 }
 
+.tooltip{
+  position: absolute;
+  background: #59717f;
+  padding: 1em 2.5em;  
+  .title{
+    color: white;
+  }
+  .value{
+    color: white;
+  }
+}
+
 // Meta
 
 // Objects
