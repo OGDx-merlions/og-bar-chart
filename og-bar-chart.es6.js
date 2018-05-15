@@ -263,15 +263,20 @@
           let tooltip = this.$.tooltip;
           tooltip.style.display="none";
           this.svg.selectAll(".bar")
-          .on("mousemove", function(d){
-            tooltip.style.display="";
-            tooltip.style.left = d3.event.pageX + "px";
-            tooltip.style.top = d3.event.pageY  - 70 + "px";
-            tooltip.innerHTML='<div class="title">'+d.x+'</div>'+
-                              '<div class="value">'+d.y+'</div>';
+          .on("mouseover", function() {
+              tooltip.style.display= null;
+          })
+          .on("mouseout", function() {
+              tooltip.style.display='none';
+          })
+          .on("mousemove", function(d) {
+              var xPosition = d3.event.offsetX + 20;
+              var yPosition = d3.event.offsetY; //d3.mouse(this)[1]+margin.top+radius;
+              tooltip.style.left= xPosition + "px";
+              tooltip.style.top=yPosition + "px";
+              tooltip.style.display="inline-block";
+              tooltip.innerHTML='<div class="title">'+d.x+'</div><div class="value">'+d.y+'</div>';
           });
-          this.svg.selectAll(".bar")
-          .on("mouseout", function(d){  tooltip.style.display="none";});
     },
 		_drawGridLines(data) {
 			let x= this.x, y=this.y, me = this, d3 = Px.d3;
